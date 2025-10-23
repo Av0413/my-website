@@ -20,5 +20,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./   # root folder where index.html and style.css exist
+          publish_dir: ./my-website
           publish_branch: gh-pages
