@@ -7,16 +7,16 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest   # GitHub-hosted runner
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List files for debug
+      - name: List files (debug)
         run: ls -R
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v6
+        uses: peaceiris/actions-gh-pages@v3  # v3 works reliably
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
