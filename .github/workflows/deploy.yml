@@ -1,4 +1,4 @@
-name: Build & Deploy Website
+name: Build & Deploy Website (Main Branch)
 
 on:
   push:
@@ -6,19 +6,24 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Optional: If you have a build step, add it here
+      # Optional: Add build step if needed
       # - name: Build site
       #   run: echo "Add build commands here"
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-main@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./my-website
-          publish_branch: main
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit website files to main
+        run: |
+          git add .
+          git commit -m "Deploy website from main" || echo "No changes to commit"
+          git push origin main
