@@ -1,20 +1,45 @@
-name: Build & Deploy Website
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # trigger on main updates
+      - main  # or 'master' if that's your default branch
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout source
+        uses: actions/checkout@v4
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Node.js (optional, if using a JS-based static site generator)
+        uses: actions/setup-node@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./          # root of repo
-          publish_branch: gh-pages
+          node-version: '18'
+
+      # Add your build steps here if needed
+      # - name: Install dependencies
+      #   run: npm install
+      # - name: Build site
+      #   run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./  # Change this to your build output directory (e.g., ./dist or ./public)
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
