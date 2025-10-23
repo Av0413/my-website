@@ -3,7 +3,7 @@ name: Build & Deploy Website
 on:
   push:
     branches:
-      - main   # Trigger when main is updated
+      - main  # trigger on main updates
 
 jobs:
   build-and-deploy:
@@ -12,12 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List files
-        run: ls -R
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./        # website files are in repo root
-          publish_branch: gh-pages  # deploy to gh-pages branch
+          publish_dir: ./          # root of repo
+          publish_branch: gh-pages
