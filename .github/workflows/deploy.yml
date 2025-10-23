@@ -13,10 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Optional: Add build step if needed
-      # - name: Build site
-      #   run: echo "Add build commands here"
-
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
