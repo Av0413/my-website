@@ -3,24 +3,24 @@ name: Build & Deploy Website
 on:
   push:
     branches:
-      - main   # Trigger workflow when main branch is updated
+      - main   # Trigger on updates to main
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest  # Use GitHub-hosted runner
+    runs-on: ubuntu-latest   # GitHub-hosted runner
     steps:
       # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Optional: list files for debugging
+      # Step 2: List files for debugging (optional)
       - name: List files
         run: ls -R
 
-      # Step 3: Deploy to gh-pages
+      # Step 3: Deploy to GitHub Pages (main branch)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./           # Website files are in repo root
-          publish_branch: gh-pages  # Deploy to gh-pages branch
+          publish_dir: ./         # Website files in repo root
+          publish_branch: main    # Deploy directly to main
